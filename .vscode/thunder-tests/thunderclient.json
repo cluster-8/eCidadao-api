@@ -113,7 +113,7 @@
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"teste5@teste.com\",\n  \"password\": \"teste5\"\n}",
+      "raw": "{\n  \"email1\": \"technical@technical.com\",\n  \"password1\": \"technical\",\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin1\"\n}",
       "form": []
     },
     "tests": [
@@ -148,12 +148,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-21T13:14:44.213Z",
-    "modified": "2022-10-29T14:00:33.998Z",
+    "modified": "2022-11-15T01:10:48.701Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"client\",\n  \"email\": \"client13@client.com\",\n  \"cpf\": \"06343722973\",\n  \"password\": \"client\",\n  \"passwordConfirmation\": \"client\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6362948d54198c179579a49f\",\n    \"usageTermsAcceptedItens\": [\n      \"2f097d21-44e2-449d-8e92-05d57046f667\",\n      \"751d0916-d5fc-471a-854a-3efee419cec8\"\n    ]\n  }\n}",
+      "raw": "{\n  \"name\": \"technical\",\n  \"email\": \"technical@admin.com\",\n  \"cpf\": \"00000000001\",\n  \"password\": \"technical\",\n  \"passwordConfirmation\": \"technical\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6365af73d64dbfd0f7c025da\",\n    \"usageTermsAcceptedItens\": [\n      \"da2117e3-1d52-4a23-8465-61fcf1e15a9c\",\n      \"865ce443-9558-4d5d-9385-9760f0972169\",\n      \"b614b9a1-9cc1-4bc9-a539-9173f70160d7\",\n      \"e4153989-82e1-4e44-aee3-d9d350a42444\",\n      \"6bdbdb77-256c-4dd2-9946-de6796edb31a\",\n      \"2f06c19c-c253-4788-aad6-8f1577adbf0d\",\n      \"92d357f0-fad9-4955-8399-b8e31e206d66\",\n      \"971f0a94-7f3b-4edf-8c03-1353f5bcc70f\",\n      \"0a4307f4-29ce-4f79-b696-0d4dce6028a5\",\n      \"74ef156a-64c6-43fd-832b-d406484c73a9\",\n      \"980000bb-985e-457d-9bba-04db4416a329\",\n      \"6cc140a4-30fa-4fa5-a2e4-72151a5fa0dd\"\n    ]\n  }\n}",
       "form": []
     },
     "tests": [
@@ -170,19 +170,13 @@
     "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
     "containerId": "",
     "name": "find",
-    "url": "{{baseurl}}/v1/user/635d3201191a34a8df2ee2b4?select=all",
+    "url": "{{baseurl}}/v1/user/6372e7183d83b7b6912b5eae?select=all",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-21T13:38:22.139Z",
-    "modified": "2022-10-29T14:00:40.156Z",
+    "modified": "2022-11-15T01:11:02.582Z",
     "headers": [],
     "params": [
-      {
-        "name": "select",
-        "value": "name email",
-        "isDisabled": true,
-        "isPath": false
-      },
       {
         "name": "select",
         "value": "all",
@@ -250,12 +244,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-10-03T11:07:29.969Z",
-    "modified": "2022-11-02T16:02:21.226Z",
+    "modified": "2022-10-03T11:14:32.948Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"itens\": [\n    {\n      \"title\": \"teste\",\n      \"paragraphs\": [\n        \"teste\"\n      ]\n    },\n    {\n      \"title\": \"teste2\",\n      \"paragraphs\": [\n        \"teste2\"\n      ]\n    }\n  ]\n}",
+      "raw": "{\n  \"itens\": [\n    {\n      \"title\": \"teste\",\n      \"paragraphs\": [\"teste\"]\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
