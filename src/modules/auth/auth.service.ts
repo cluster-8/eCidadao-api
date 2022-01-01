@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
+import { sqlitePrisma } from '@src/providers/prisma/sqlite/sqlite.prisma.fn';
 import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
@@ -30,8 +32,20 @@ export class AuthService {
 
     if (!passwordMatched) throw new BadRequestException('Incorrect email/password combination');
 
+    await this.checkUserKey(user);
+
     const token = this.generateToken(user.id, user.email, user.role);
 
     return { user: defaultPlainToClass(UserDto, user), token };
+  }
+
+  private async checkUserKey(user: User) {
+    const userKey = await sqlitePrisma.userKeys.findUnique({ where: { id: user.secretId } });
+
+    if (!userKey) {
+      await this.prisma.user.update({ where: { id: user.id }, data: { hashCpf: null, hashEmail: null } });
+
+      throw new BadRequestException('User key not found');
+    }
   }
 }
