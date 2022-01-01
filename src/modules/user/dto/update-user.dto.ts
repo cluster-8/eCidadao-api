@@ -9,6 +9,7 @@ export class UpdateUserDto {
 
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   name: string;
 
   @IsString()
@@ -33,4 +34,5 @@ export class UpdateUserDto {
   newPasswordConfirmation: string;
 
   password: string;
+  hashEmail: string;
 }

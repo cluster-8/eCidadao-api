@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { UserKeys } from '@sqlite/prisma/client';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
 import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
 import { sqlitePrisma } from '@src/providers/prisma/sqlite/sqlite.prisma.fn';
@@ -22,7 +23,7 @@ export class UserService {
 
     delete createDto.passwordConfirmation;
 
-    createDto = await this.encryptUser(createDto);
+    createDto = await this.encryptUserOnCreate(createDto);
 
     const user = await this.prisma.user.create({ data: { ...createDto } });
 
@@ -31,15 +32,16 @@ export class UserService {
     return { user, token };
   }
 
-  async encryptUser(createDto: CreateUserDto) {
+  async encryptUserOnCreate(createDto: CreateUserDto) {
     const key = crypto.randomBytes(16).toString('hex');
 
     const secret = await sqlitePrisma.userKeys.create({ data: { secret: key } });
 
     createDto.secretId = secret.id;
 
-    createDto.hashCpf = crypto.createHash('md5').update(createDto.cpf).digest('hex');
-    createDto.hashEmail = crypto.createHash('md5').update(createDto.email).digest('hex');
+    createDto.hashCpf = this.hashMd5(createDto.cpf);
+
+    createDto.hashEmail = this.hashMd5(createDto.email);
 
     createDto.password = bcrypt.hashSync(createDto.password, 10);
 
@@ -51,8 +53,8 @@ export class UserService {
   }
 
   private async checkUserAlreadyExists(email: string, cpf: string) {
-    const hashCpf = crypto.createHash('md5').update(cpf).digest('hex');
-    const hashEmail = crypto.createHash('md5').update(email).digest('hex');
+    const hashCpf = this.hashMd5(cpf);
+    const hashEmail = this.hashMd5(email);
 
     const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: [{ hashCpf }, { hashEmail }] } });
 
@@ -88,6 +90,10 @@ export class UserService {
 
     if (!user) throw new BadRequestException('User not found');
 
+    const userKey = await sqlitePrisma.userKeys.findUnique({ where: { id: user.secretId } });
+
+    if (!userKey) throw new BadRequestException('User key not found');
+
     if (updateDto?.oldPassword && bcrypt.hashSync(updateDto.oldPassword, 10) !== user.password) {
       throw new BadRequestException('Old password does not match');
     }
@@ -100,7 +106,25 @@ export class UserService {
       delete updateDto.newPasswordConfirmation;
     }
 
+    if (updateDto.email || updateDto.name) {
+      updateDto = await this.encryptUserOnUpdate(updateDto, userKey);
+    }
+
     await this.prisma.user.update({ where: { id }, data: updateDto });
+  }
+
+  async encryptUserOnUpdate(updateDto: UpdateUserDto, userKey: UserKeys) {
+    if (updateDto.email) {
+      updateDto.hashEmail = this.hashMd5(updateDto.email);
+
+      updateDto.email = encrypt(updateDto.email, userKey.secret);
+    }
+
+    if (updateDto.name) {
+      updateDto.name = encrypt(updateDto.name, userKey.secret);
+    }
+
+    return updateDto;
   }
 
   async remove(id: string) {
@@ -112,8 +136,12 @@ export class UserService {
       return;
     });
 
-    await this.prisma.user.delete({ where: { id } }).catch(() => {
+    await this.prisma.user.update({ where: { id }, data: { hashCpf: null, hashEmail: null } }).catch(() => {
       return;
     });
+  }
+
+  private hashMd5(data: string) {
+    return crypto.createHash('md5').update(data).digest('hex');
   }
 }
