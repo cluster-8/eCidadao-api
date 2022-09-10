@@ -6,7 +6,7 @@ export function globalAppConfig(app: INestApplication) {
       whitelist: true,
       transform: true,
       transformOptions: { enableImplicitConversion: true },
-    }),
+    })
   );
 
   app.enableVersioning({

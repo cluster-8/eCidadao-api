@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  cpf      String        @unique
+  email    String        @unique
+  name     String
+  phone    String?
+  password String
+  role     enumUserRoles @default(client)
+
+  usageTermsAcceptedAt DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  requestCreatedBy  Request[] @relation(name: "createdBy")
+  requestFinishedBy Request[] @relation(name: "finishedBy")
+}
+
+model Request {
+  id          String                @id @default(auto()) @map("_id") @db.ObjectId
+  image       String
+  description String
+  type        enumComumTypeRequest?
+  status      enumStatusRequest
+  adress      Adress
+
+  createdByUser User?   @relation(name: "createdBy", fields: [createdBy], references: [id])
+  createdBy     String? @db.ObjectId
+
+  finishedByUser User?   @relation(name: "finishedBy", fields: [finishedBy], references: [id])
+  finishedBy     String? @db.ObjectId
+}
+
+type Adress {
+  lat          String
+  long         String
+  city         String
+  state        String
+  street       String
+  zipcode      String
+  neighborhood String
+  number       Int?
+}
+
+enum enumUserRoles {
+  admin
+  client
+  technical
+}
+
+enum enumComumTypeRequest {
+  arvoreCaindo
+  posteCaindo
+  burraco
+}
+
+enum enumStatusRequest {
+  opened
+  closed
+}
