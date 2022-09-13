@@ -16,7 +16,7 @@ async function bootstrap() {
     methods: 'GET, POST, PUT, DELETE, UPDATE, OPTIONS',
   });
 
-  await app.listen(process.env.PORT || 3333);
+  await app.listen(process.env.PORT || 3000);
 
   console.log('Server on');
   console.log(`env: .env.${process.env.NODE_ENV}`);
