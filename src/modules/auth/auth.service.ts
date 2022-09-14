@@ -1,7 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
+import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
 import * as bcrypt from 'bcrypt';
+import { UserDto } from '../user/dto/user.dto';
 import { SignInDto } from './dto/sign.in.dto';
 
 @Injectable()
@@ -32,6 +34,6 @@ export class AuthService {
 
     const token = this.generateToken(user.id, user.email, user.role);
 
-    return { user, token };
+    return { user: defaultPlainToClass(UserDto, user), token };
   }
 }
