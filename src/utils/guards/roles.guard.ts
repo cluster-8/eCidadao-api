@@ -8,7 +8,9 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const roles = this.reflector.get<enumRoles[]>('roles', context.getHandler());
+    return true; // temporário, até implementar a autenticação no front!
+
+    const roles = this.reflector.get<enumRoles[]>('roles', context.getHandler())?.map((v) => enumRoles[v]);
 
     if (!roles || !roles.length) return true;
 
@@ -18,9 +20,9 @@ export class RolesGuard implements CanActivate {
 
     if (!reqUser) return false;
 
-    if (roles.includes(enumRoles.isSameUser)) return request.params.id === reqUser.id;
+    if (roles.includes('isSameUser')) return request.params.id === reqUser.id;
 
-    if (roles.find((v) => v.toString() === String(reqUser?.role))) return true;
+    if (roles.find((v) => v === String(reqUser?.role))) return true;
 
     return false;
   }
