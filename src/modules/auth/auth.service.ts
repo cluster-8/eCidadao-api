@@ -8,12 +8,7 @@ import { SignInDto } from './dto/sign.in.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService) {
-    setTimeout(async () => {
-      console.log('admin', await bcrypt.hashSync('admin', 10));
-      console.log('technical', await bcrypt.hashSync('technical', 10));
-    }, 1500);
-  }
+  constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService) {}
 
   generateToken(id: string, email: string, role: string) {
     const payload = { id: id, email: email, role: role };
