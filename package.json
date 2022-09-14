@@ -9,7 +9,7 @@
     "start:local": "NODE_ENV=local nest start --debug --watch",
     "start:prod": "node dist/main",
     "prisma": "npx prisma db push; npx prisma generate",
-    "heroku-prebuild": "rm -rf dist && npx prisma migrate deploy && npx prisma generate",
+    "heroku-prebuild": "rm -rf dist && npm run prisma",
     "build": "nest build",
     "format": "prettier --write --loglevel=error \"src/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
