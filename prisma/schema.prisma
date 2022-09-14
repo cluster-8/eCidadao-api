@@ -25,33 +25,44 @@ model User {
   updatedAt DateTime @default(now())
 
   requestCreatedBy  Request[] @relation(name: "createdBy")
+  requestUpdatedBy  Request[] @relation(name: "updatedBy")
   requestFinishedBy Request[] @relation(name: "finishedBy")
 }
 
 model Request {
-  id          String                @id @default(auto()) @map("_id") @db.ObjectId
-  image       String
-  description String
-  type        enumComumTypeRequest?
-  status      enumStatusRequest
-  adress      Adress
+  id                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  identifier          Int
+  image               String
+  adress              Adress
+  description         String
+  status              enumStatusRequest     @default(opened)
+  type                enumComumTypeRequest?
+  finishedImage       String?
+  finishedDescription String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime?             @updatedAt
+  finishedAt          DateTime?
 
   createdByUser User?   @relation(name: "createdBy", fields: [createdBy], references: [id])
   createdBy     String? @db.ObjectId
+
+  updatedByUser User?   @relation(name: "updatedBy", fields: [updatedBy], references: [id])
+  updatedBy     String? @db.ObjectId
 
   finishedByUser User?   @relation(name: "finishedBy", fields: [finishedBy], references: [id])
   finishedBy     String? @db.ObjectId
 }
 
 type Adress {
-  lat          String
-  long         String
-  city         String
-  state        String
-  street       String
-  zipcode      String
-  neighborhood String
-  number       Int?
+  lat             String
+  long            String
+  city            String
+  state           String
+  street          String
+  zipcode         String
+  neighborhood    String
+  formattedAdress String
+  number          Int?
 }
 
 enum enumUserRoles {
