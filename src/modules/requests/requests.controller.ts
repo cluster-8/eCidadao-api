@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { RequestsService } from './requests.service';
+import { NoCache } from '@src/utils/decorators/no.cache.decorator';
+import { Roles, enumRoles } from '@src/utils/decorators/roles.decorator';
+import { paramId } from '@src/utils/dtos/param.id.dto';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { FinishRequestDto, UpdateRequestDto } from './dto/update-request.dto';
-import { paramId } from '@src/utils/dtos/param.id.dto';
-import { Roles, enumRoles } from '@src/utils/decorators/roles.decorator';
+import { RequestsService } from './requests.service';
 
 @Controller({ path: 'requests', version: '1' })
 export class RequestsController {
@@ -17,12 +18,14 @@ export class RequestsController {
   }
 
   @Get('technical')
+  @NoCache()
   @Roles(enumRoles.technical)
   async findTechical() {
     return this.requestsService.findTechical();
   }
 
   @Get()
+  @NoCache()
   async find() {
     return this.requestsService.find();
   }

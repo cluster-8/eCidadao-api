@@ -1,23 +1,23 @@
-// import { CacheInterceptor, ExecutionContext, Injectable } from '@nestjs/common'
+import { CacheInterceptor, ExecutionContext, Injectable } from '@nestjs/common';
 
-// @Injectable()
-// export class HttpCacheInterceptor extends CacheInterceptor {
-//   trackBy(context: ExecutionContext): string | undefined {
-//     const request = context.switchToHttp().getRequest()
-//     const { httpAdapter } = this.httpAdapterHost
+@Injectable()
+export class HttpCacheInterceptor extends CacheInterceptor {
+  trackBy(context: ExecutionContext): string | undefined {
+    const request = context.switchToHttp().getRequest();
+    const { httpAdapter } = this.httpAdapterHost;
 
-//     const isGetRequest = httpAdapter.getRequestMethod(request) === 'GET'
+    const isGetRequest = httpAdapter.getRequestMethod(request) === 'GET';
 
-//     const ignoreCaching: boolean = this.reflector.get('ignoreCaching', context.getHandler())
+    const ignoreCaching: boolean = this.reflector.get('ignoreCaching', context.getHandler());
 
-//     const excludePaths = [
-//       // Routes to be excluded
-//     ]
+    const excludePaths = [
+      // Routes to be excluded
+    ];
 
-//     if (ignoreCaching || !isGetRequest || (isGetRequest && excludePaths.includes(httpAdapter.getRequestUrl(request)))) {
-//       return undefined
-//     }
+    if (ignoreCaching || !isGetRequest || (isGetRequest && excludePaths.includes(httpAdapter.getRequestUrl(request)))) {
+      return undefined;
+    }
 
-//     return httpAdapter.getRequestUrl(request)
-//   }
-// }
+    return httpAdapter.getRequestUrl(request);
+  }
+}
