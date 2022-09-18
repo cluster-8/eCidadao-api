@@ -20,7 +20,7 @@ export const getGoogleGeocode = async (lat: string, long: string) => {
     formattedAdress: result?.formatted_address,
     street: result.address_components.find((v) => v.types.includes('route'))?.long_name,
     zipcode: result.address_components.find((v) => v.types.includes('postal_code'))?.long_name,
-    number: Number(result.address_components.find((v) => v.types.includes('street_number'))?.long_name),
+    number: Number(result.address_components.find((v) => v.types.includes('street_number'))?.long_name) || null,
     city: result.address_components.find((v) => v.types.includes('administrative_area_level_2'))?.long_name,
     neighborhood: result.address_components.find((v) => v.types.includes('sublocality_level_1'))?.long_name,
     state: result.address_components.find((v) => v.types.includes('administrative_area_level_1'))?.short_name,
