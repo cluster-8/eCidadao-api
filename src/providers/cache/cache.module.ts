@@ -10,7 +10,7 @@ import { CacheService } from './cache.service';
 @Module({
   imports: [
     CacheModule.register<RedisClientOptions>({
-      ttl: 30,
+      ttl: 10,
       isGlobal: true,
       store: redisStore,
       password: process.env.REDIS_PASS,
