@@ -16,8 +16,6 @@ export const getGoogleGeocode = async (lat: string, long: string) => {
 
   if (!result) throw new BadRequestException('Cannot find your lat and long into google');
 
-  console.log(result.address_components);
-
   return {
     formattedAdress: result?.formatted_address,
     street: result.address_components.find((v) => v.types.includes('route'))?.long_name || result.address_components.find((v) => v.types.includes('transit_station'))?.long_name,
