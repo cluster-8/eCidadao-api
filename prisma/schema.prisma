@@ -11,13 +11,15 @@ datasource db {
 }
 
 model User {
-  id       String        @id @default(auto()) @map("_id") @db.ObjectId
-  cpf      String        @unique
-  email    String        @unique
-  name     String
-  phone    String?
-  password String
-  role     enumUserRoles @default(client)
+  id                   String        @id @default(auto()) @map("_id") @db.ObjectId
+  cpf                  String        @unique
+  email                String        @unique
+  name                 String
+  phone                String?
+  password             String
+  passwordResetToken   String?
+  passwordResetExpires DateTime?
+  role                 enumUserRoles @default(client)
 
   usageTermsAcceptedAt DateTime
 
@@ -25,7 +27,6 @@ model User {
   updatedAt DateTime @updatedAt
 
   requestCreatedBy  Request[] @relation(name: "createdBy")
-  requestUpdatedBy  Request[] @relation(name: "updatedBy")
   requestFinishedBy Request[] @relation(name: "finishedBy")
 }
 
@@ -45,9 +46,6 @@ model Request {
 
   createdByUser User?   @relation(name: "createdBy", fields: [createdBy], references: [id])
   createdBy     String? @db.ObjectId
-
-  updatedByUser User?   @relation(name: "updatedBy", fields: [updatedBy], references: [id])
-  updatedBy     String? @db.ObjectId
 
   finishedByUser User?   @relation(name: "finishedBy", fields: [finishedBy], references: [id])
   finishedBy     String? @db.ObjectId
