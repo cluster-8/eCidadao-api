@@ -56,10 +56,10 @@ type Adress {
   long            String
   city            String
   state           String
-  street          String
-  zipcode         String
-  neighborhood    String
   formattedAdress String
+  street          String?
+  zipcode         String?
+  neighborhood    String?
   number          Int?
 }
 
