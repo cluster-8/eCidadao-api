@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { NoCache } from '@src/utils/decorators/no.cache.decorator';
 import { Roles, enumRoles } from '@src/utils/decorators/roles.decorator';
 import { paramId } from '@src/utils/dtos/param.id.dto';
+import { AdressDto } from './dto/adress.dto';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { FinishRequestDto, UpdateRequestDto } from './dto/update-request.dto';
 import { RequestsService } from './requests.service';
@@ -15,6 +16,11 @@ export class RequestsController {
     const result = await this.requestsService.create(createRequestDto);
 
     return { id: result.id };
+  }
+
+  @Get('adress')
+  async findAdressFromGoogleGeocode(@Query() body: AdressDto) {
+    return this.requestsService.findAdressFromGoogleGeocode(body.lat, body.long);
   }
 
   @Get('technical')

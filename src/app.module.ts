@@ -1,6 +1,7 @@
-import { Module, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ModulesModule } from './modules/modules.module';
+import { EnsureAuthenticated } from './providers/middleware/ensure.authenticated.middleware';
 import { ProvidersModule } from './providers/providers.module';
 import { UtilsModule } from './utils/utils.module';
 
@@ -23,13 +24,13 @@ export class AppModule {
     { path: '/v1/user', method: RequestMethod.POST },
   ];
 
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer
-  //     .apply(EnsureAuthenticated)
-  //     .exclude(...this.ensureAuthenticatedExclude)
-  //     .forRoutes({
-  //       path: '*',
-  //       method: RequestMethod.ALL,
-  //     });
-  // }
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(EnsureAuthenticated)
+      .exclude(...this.ensureAuthenticatedExclude)
+      .forRoutes({
+        path: '*',
+        method: RequestMethod.ALL,
+      });
+  }
 }
