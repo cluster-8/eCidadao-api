@@ -8,8 +8,6 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    return true; // temporário, até implementar a autenticação no front!
-
     const roles = this.reflector.get<enumRoles[]>('roles', context.getHandler())?.map((v) => enumRoles[v]);
 
     if (!roles || !roles.length) return true;
