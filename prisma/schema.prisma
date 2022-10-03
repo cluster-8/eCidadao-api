@@ -70,9 +70,30 @@ enum enumUserRoles {
 }
 
 enum enumComumTypeRequest {
-  arvoreCaindo
-  posteCaindo
-  burraco
+  aguaPotavel_abastecimento         @map("Agua Potável/Abastecimento")
+  alambrado_manutencao              @map("Alambrado/Manutenção")
+  APP                               @map("Área de Preservação Permanente")
+  arvore                            @map("Árvore")
+  corteDeRaiz                       @map("Corte de raiz")
+  limpezaAposPoda                   @map("Limpeza após poda")
+  poda                              @map("Poda")
+  queda                             @map("Queda")
+  quedaDeGalhos                     @map("Queda de galhos")
+  requadroDeCalcada                 @map("Requadro de calçada")
+  ciclovia_manutencao               @map("Ciclovia/manutenção")
+  drenagemDiversos                  @map("Drenagem/diversos")
+  fundoDoVale_capinaMargensCorregos @map("Fundo do Vale/Capina margens córregos")
+  guias_manutencaoEPintura          @map("Guias/manutenção e pintura")
+  limpeza_coletaNoGramado_raspagem  @map("Limpeza/coleta no gramado/Raspagem")
+  lixeira_areasRurais               @map("Lixeiras/áreas rurais")
+  logradourosPublicos               @map("Logradouros públicos")
+  capina_rocada                     @map("Capina/Roçada")
+  entulhoEmAreaPublica              @map("Entulho em área pública")
+  placaDeProibicao                  @map("Placa de proibição")
+  mureta_manutencao_remocao         @map("Mureta/manutenção/remoção")
+  passarelasDeMadeira_manutencao    @map("Passarelas de madeira/Manutenção")
+  passeio_recomposicao              @map("Passeio/recomposição")
+  pistaDeCaminhada_manutencao       @map("Pista de caminhada/manutenção")
 }
 
 enum enumStatusRequest {
