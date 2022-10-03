@@ -34,7 +34,7 @@ model Request {
   id                  String                @id @default(auto()) @map("_id") @db.ObjectId
   identifier          Int
   image               String
-  adress              Adress
+  address             Address
   description         String
   status              enumStatusRequest     @default(opened)
   type                enumComumTypeRequest?
@@ -51,7 +51,7 @@ model Request {
   finishedBy     String? @db.ObjectId
 }
 
-type Adress {
+type Address {
   lat             String
   long            String
   city            String

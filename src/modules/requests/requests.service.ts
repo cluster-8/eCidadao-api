@@ -5,7 +5,7 @@ import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn'
 import { getGoogleGeocode } from '@src/utils/functions/google.geocode.fn';
 import { Request } from '@src/utils/services/request.service';
 import { plainToClass } from 'class-transformer';
-import { AdressDto } from './dto/adress.dto';
+import { AddressDto } from './dto/address.dto';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { RequestDto } from './dto/request.dto';
 import { FinishRequestDto, UpdateRequestDto } from './dto/update-request.dto';
@@ -17,7 +17,7 @@ export class RequestsService {
   async create(createDto: CreateRequestDto) {
     createDto.createdBy = this.request?.user?.id;
 
-    createDto.adress = await this.buildAdress(createDto.adress.lat, createDto.adress.long);
+    createDto.address = await this.buildAddress(createDto.address.lat, createDto.address.long);
 
     const identifier = await this.getIdentifier();
 
@@ -26,10 +26,10 @@ export class RequestsService {
     return request;
   }
 
-  private async buildAdress(lat: string, long: string, number?: number) {
+  private async buildAddress(lat: string, long: string, number?: number) {
     const googleGeocode = await getGoogleGeocode(lat, long);
 
-    return plainToClass(AdressDto, { ...googleGeocode, number: number || googleGeocode.number });
+    return plainToClass(AddressDto, { ...googleGeocode, number: number || googleGeocode.number });
   }
 
   private async getIdentifier() {
@@ -54,8 +54,8 @@ export class RequestsService {
     return defaultPlainToClass(RequestDto, this.prisma.request.findMany(query));
   }
 
-  async findAdressFromGoogleGeocode(lat: string, long: string) {
-    return this.buildAdress(lat, long);
+  async findAddressFromGoogleGeocode(lat: string, long: string) {
+    return this.buildAddress(lat, long);
   }
 
   async finishRequest(id: string, finishDto: FinishRequestDto) {

@@ -1,7 +1,7 @@
 import { enumComumTypeRequest, enumStatusRequest } from '@prisma/client';
 import { Type } from 'class-transformer';
 import { IsEnum, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
-import { AdressDto } from './adress.dto';
+import { AddressDto } from './address.dto';
 
 export class CreateRequestDto {
   @IsString()
@@ -13,9 +13,9 @@ export class CreateRequestDto {
   description: string;
 
   @IsNotEmpty()
-  @Type(() => AdressDto)
+  @Type(() => AddressDto)
   @ValidateNested()
-  adress: AdressDto;
+  address: AddressDto;
 
   @IsEnum(enumComumTypeRequest)
   @IsNotEmpty()

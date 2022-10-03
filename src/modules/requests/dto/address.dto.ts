@@ -1,8 +1,8 @@
-import { Adress } from '@prisma/client';
+import { Address } from '@prisma/client';
 import { Expose } from 'class-transformer';
 import { IsInt, IsLatitude, IsLongitude, IsNotEmpty, IsOptional } from 'class-validator';
 
-export class AdressDto implements Adress {
+export class AddressDto implements Address {
   @IsLatitude()
   @IsNotEmpty()
   @Expose()

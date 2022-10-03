@@ -1,6 +1,6 @@
 import { enumComumTypeRequest, enumStatusRequest } from '@prisma/client';
 import { Expose, Type } from 'class-transformer';
-import { AdressDto } from './adress.dto';
+import { AddressDto } from './address.dto';
 
 export class RequestDto {
   @Expose()
@@ -16,8 +16,8 @@ export class RequestDto {
   description: string;
 
   @Expose()
-  @Type(() => AdressDto)
-  adress: AdressDto;
+  @Type(() => AddressDto)
+  address: AddressDto;
 
   @Expose()
   type: enumComumTypeRequest;
