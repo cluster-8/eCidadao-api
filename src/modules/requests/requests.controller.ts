@@ -18,7 +18,7 @@ export class RequestsController {
     return { id: result.id };
   }
 
-  @Get('adress')
+  @Get('address')
   async findAdressFromGoogleGeocode(@Query() body: AdressDto) {
     return this.requestsService.findAdressFromGoogleGeocode(body.lat, body.long);
   }
