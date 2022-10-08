@@ -1,10 +1,10 @@
 import { enumComumTypeRequest, enumStatusRequest } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsEnum, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, IsUrl, ValidateNested } from 'class-validator';
 import { AddressDto } from './address.dto';
 
 export class CreateRequestDto {
-  @IsString()
+  @IsUrl()
   @IsNotEmpty()
   image: string;
 
