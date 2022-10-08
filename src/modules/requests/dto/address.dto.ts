@@ -35,5 +35,5 @@ export class AddressDto implements Address {
   neighborhood: string;
 
   @Expose()
-  formattedAdress: string;
+  formattedAddress: string;
 }

@@ -52,15 +52,15 @@ model Request {
 }
 
 type Address {
-  lat             String
-  long            String
-  city            String
-  state           String
-  formattedAdress String
-  street          String?
-  zipcode         String?
-  neighborhood    String?
-  number          Int?
+  lat              String
+  long             String
+  city             String
+  state            String
+  formattedAddress String
+  street           String?
+  zipcode          String?
+  neighborhood     String?
+  number           Int?
 }
 
 enum enumUserRoles {
