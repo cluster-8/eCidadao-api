@@ -70,6 +70,7 @@ enum enumUserRoles {
 }
 
 enum enumComumTypeRequest {
+  outros                            @map("Outros")
   aguaPotavel_abastecimento         @map("Agua Potável/Abastecimento")
   alambrado_manutencao              @map("Alambrado/Manutenção")
   APP                               @map("Área de Preservação Permanente")
