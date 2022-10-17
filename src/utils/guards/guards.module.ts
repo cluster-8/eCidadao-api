@@ -4,7 +4,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { RolesGuard } from './roles.guard';
 
 @Module({
-  imports: [ThrottlerModule.forRoot({ ttl: 60, limit: 100 })],
+  imports: [ThrottlerModule.forRoot({ ttl: 60, limit: 1000 })],
   controllers: [],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }, { provide: APP_GUARD, useClass: RolesGuard }, RolesGuard],
 })
