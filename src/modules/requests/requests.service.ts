@@ -29,7 +29,7 @@ export class RequestsService {
   private async buildAddress(lat: string, long: string, number?: number) {
     const googleGeocode = await getGoogleGeocode(lat, long);
 
-    return plainToClass(AddressDto, { ...googleGeocode, number: number || googleGeocode.number });
+    return plainToClass(AddressDto, { ...googleGeocode, number: number || googleGeocode.number, lat, long });
   }
 
   private async getIdentifier() {
