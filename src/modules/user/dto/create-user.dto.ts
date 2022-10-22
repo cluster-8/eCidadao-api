@@ -1,6 +1,6 @@
 import { IsCPF } from '@src/utils/decorators/cpf.decorator';
 import { Match } from '@src/utils/decorators/match.decorator';
-import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsCPF()
@@ -32,4 +32,8 @@ export class CreateUserDto {
   @IsDate()
   @IsNotEmpty()
   usageTermsAcceptedAt: Date;
+
+  @IsInt()
+  @IsNotEmpty()
+  usageTermsVersion: number;
 }

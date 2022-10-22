@@ -13,9 +13,9 @@ export class UserService {
   constructor(private readonly prisma: PrismaService, private readonly authService: AuthService, private readonly qb: QuerybuilderService) {}
 
   async create(createDto: CreateUserDto) {
-    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: { email: createDto.email, cpf: createDto.cpf } } });
+    await this.checkUserAlreadyExists(createDto.email, createDto.cpf);
 
-    if (userAlreadyExist) throw new BadRequestException('Cpf or email already exists');
+    await this.checkUsageTerms(createDto.usageTermsVersion);
 
     delete createDto.passwordConfirmation;
 
@@ -24,6 +24,18 @@ export class UserService {
     const token = this.authService.generateToken(user.id, user.email, user.role);
 
     return { user, token };
+  }
+
+  private async checkUserAlreadyExists(email: string, cpf: string) {
+    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: { email: email, cpf: cpf } } });
+
+    if (userAlreadyExist) throw new BadRequestException('Cpf or email already exists');
+  }
+
+  private async checkUsageTerms(version: number) {
+    const usageTerms = await this.prisma.usageTerms.findUnique({ where: { version } });
+
+    if (!usageTerms) throw new BadRequestException('UsageTerms not found');
   }
 
   async findOne(id: string) {
