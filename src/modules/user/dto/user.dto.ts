@@ -22,4 +22,7 @@ export class UserDto {
 
   @Expose()
   usageTermsAcceptedAt: Date;
+
+  @Expose()
+  usageTermVersion: number;
 }
