@@ -15,7 +15,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test:e2e": "NODE_ENV=test jest --testRegex='.*\\e2e.spec\\.ts$' --forceExit",
     "test.push:e2e": "NODE_ENV=test jest --testRegex='.*\\e2e.spec\\.ts$' --silent --noStackTrace --passWithNoTests --forceExit",
-    "gitignore": "git update-index --assume-unchanged .vscode/thunder-tests/thunderEnvironment.db"
+    "gitignore": "git update-index --assume-unchanged .vscode/thunder-tests/thunderEnvironment.json"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
