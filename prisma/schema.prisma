@@ -22,6 +22,7 @@ model User {
   role                 enumUserRoles @default(client)
 
   usageTermsAcceptedAt DateTime
+  usageTermsVersion    Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -49,6 +50,20 @@ model Request {
 
   finishedByUser User?   @relation(name: "finishedBy", fields: [finishedBy], references: [id])
   finishedBy     String? @db.ObjectId
+}
+
+model usageTerms {
+  id      String            @id @default(auto()) @map("_id") @db.ObjectId
+  version Int               @unique
+  itens   UsageTermsItens[]
+
+  createdAt DateTime @default(now())
+  createdBy String?  @db.ObjectId
+}
+
+type UsageTermsItens {
+  title      String
+  paragraphs String[]
 }
 
 type Address {
