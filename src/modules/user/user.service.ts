@@ -1,16 +1,24 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
+import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
+import { SqlitePrismaService } from '@src/providers/prisma/sqlite/sqlite.prisma.service';
+import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
+import { encrypt } from '@src/utils/functions/encrypter.fn';
+import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
+import { AuthService } from '../auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import * as bcrypt from 'bcrypt';
-import { AuthService } from '../auth/auth.service';
-import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
-import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
 import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService, private readonly authService: AuthService, private readonly qb: QuerybuilderService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly sqlite: SqlitePrismaService,
+    private readonly authService: AuthService,
+    private readonly qb: QuerybuilderService
+  ) {}
 
   async create(createDto: CreateUserDto) {
     await this.checkUserAlreadyExists(createDto.email, createDto.cpf);
@@ -19,11 +27,31 @@ export class UserService {
 
     delete createDto.passwordConfirmation;
 
-    const user = await this.prisma.user.create({ data: { ...createDto, password: bcrypt.hashSync(createDto.password, 10) } });
+    createDto = await this.encryptUser(createDto);
+
+    const user = await this.prisma.user.create({ data: { ...createDto } });
 
     const token = this.authService.generateToken(user.id, user.email, user.role);
 
     return { user, token };
+  }
+
+  async encryptUser(createDto: CreateUserDto) {
+    const key = crypto.randomBytes(16).toString('hex');
+
+    const secret = await this.sqlite.userKeys.create({ data: { secret: key } });
+
+    createDto.secretId = secret.id;
+
+    createDto.hashCpf = bcrypt.hashSync(createDto.cpf, 10);
+    createDto.hashEmail = bcrypt.hashSync(createDto.email, 10);
+
+    createDto.password = bcrypt.hashSync(createDto.password, 10);
+
+    createDto.cpf = encrypt(createDto.cpf, key);
+    createDto.email = encrypt(createDto.email, key);
+
+    return createDto;
   }
 
   private async checkUserAlreadyExists(email: string, cpf: string) {
@@ -42,6 +70,8 @@ export class UserService {
     const { select } = await this.qb.query('user', 'id', { id });
 
     const user = await this.prisma.user.findUnique({ where: { id }, select });
+
+    if (!user) throw new BadRequestException('User not found');
 
     return defaultPlainToClass(UserDto, user);
   }

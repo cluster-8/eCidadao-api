@@ -31,4 +31,9 @@ export class CreateUserDto {
   @IsInt()
   @IsNotEmpty()
   usageTermsVersion: number;
+
+  hashCpf: string;
+  hashEmail: string;
+
+  secretId: string;
 }
