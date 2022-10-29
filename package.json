@@ -71,6 +71,7 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npm run gitignore",
       "pre-push": "npm run format && npm run lint"
     }
   },
