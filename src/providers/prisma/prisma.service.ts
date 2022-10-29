@@ -1,14 +1,17 @@
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import { PrismaMiddlewareService } from './middleware/prisma.middleware.service';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
-  constructor() {
-    super({ log: [{ emit: 'stdout', level: 'query' }] });
+  constructor(private readonly middleware: PrismaMiddlewareService) {
+    super();
   }
 
   async onModuleInit() {
     await this.$connect();
+
+    this.$use(this.middleware.UserDecrypt);
   }
 
   async enableShutdownHooks(app: INestApplication) {
@@ -16,19 +19,4 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       await app.close();
     });
   }
-}
-
-export function UserDecryptMiddleware<T extends Prisma.BatchPayload = Prisma.BatchPayload>(): Prisma.Middleware {
-  return async (params: Prisma.MiddlewareParams, next: (params: Prisma.MiddlewareParams) => Promise<T>): Promise<T> => {
-    const result = await next(params);
-
-    // if (params.model === 'User') {
-    // }
-
-    // const models: Prisma.ModelName = '';
-
-    console.log('result: ', result);
-
-    return result;
-  };
 }
