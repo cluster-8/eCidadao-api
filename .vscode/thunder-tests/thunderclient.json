@@ -27,13 +27,23 @@
     "colId": "3f05fe0c-4c75-4f83-b45e-4a46593d98a3",
     "containerId": "",
     "name": "find",
-    "url": "{{baseurl}}/v1/requests?select=all",
+    "url": "{{baseurl}}/v1/requests?populate[0][path]=createdByUser&populate[0][select]=id&select=all",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-12T13:16:20.096Z",
-    "modified": "2022-09-14T10:50:32.722Z",
+    "modified": "2022-10-27T21:23:59.053Z",
     "headers": [],
     "params": [
+      {
+        "name": "populate[0][path]",
+        "value": "createdByUser",
+        "isPath": false
+      },
+      {
+        "name": "populate[0][select]",
+        "value": "id",
+        "isPath": false
+      },
       {
         "name": "select",
         "value": "all",
@@ -98,12 +108,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-14T10:44:31.496Z",
-    "modified": "2022-10-03T12:03:28.686Z",
+    "modified": "2022-10-29T13:53:52.100Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email1\": \"technical@technical.com\",\n  \"password1\": \"technical\",\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin\"\n}",
+      "raw": "{\n  \"email1\": \"technical@technical.com\",\n  \"password1\": \"technical\",\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin1\"\n}",
       "form": []
     },
     "tests": [
@@ -138,12 +148,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-21T13:14:44.213Z",
-    "modified": "2022-09-21T13:30:40.262Z",
+    "modified": "2022-10-29T14:00:33.998Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"tete\",\n  \"email\": \"teste@teste.com\",\n  \"cpf\": \"06343722971\",\n  \"password\": \"teste\",\n  \"passwordConfirmation\": \"teste\",\n  \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\"\n}",
+      "raw": "{\n  \"name\": \"admin2\",\n  \"email\": \"admin2@admin.com\",\n  \"cpf\": \"06343722971\",\n  \"password\": \"admin1\",\n  \"passwordConfirmation\": \"admin1\",\n  \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n  \"usageTermsVersion\": 1\n}",
       "form": []
     },
     "tests": [
@@ -160,16 +170,16 @@
     "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
     "containerId": "",
     "name": "find",
-    "url": "{{baseurl}}/v1/user/6317488b9c8ee54575f014f2?select=name email",
+    "url": "{{baseurl}}/v1/user/635d3201191a34a8df2ee2b4?select=all",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-21T13:38:22.139Z",
-    "modified": "2022-09-23T12:17:13.896Z",
+    "modified": "2022-10-29T14:00:40.156Z",
     "headers": [],
     "params": [
       {
         "name": "select",
-        "value": "name email",
+        "value": "all",
         "isPath": false
       }
     ],
