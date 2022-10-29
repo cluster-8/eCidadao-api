@@ -47,10 +47,30 @@ export class UserService {
   }
 
   async update(id: string, updateDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!user) throw new BadRequestException('User not found');
+
+    if (updateDto?.oldPassword && bcrypt.hashSync(updateDto.oldPassword, 10) !== user.password) {
+      throw new BadRequestException('Old password does not match');
+    }
+
+    if (updateDto?.newPassword) {
+      updateDto.password = bcrypt.hashSync(updateDto.newPassword, 10);
+
+      delete updateDto.oldPassword;
+      delete updateDto.newPassword;
+      delete updateDto.newPasswordConfirmation;
+    }
+
+    await this.prisma.user.update({ where: { id }, data: updateDto });
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} user`;
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!user) throw new BadRequestException('User not found');
+
+    await this.prisma.user.delete({ where: { id } });
   }
 }
