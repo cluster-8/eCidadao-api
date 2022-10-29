@@ -1,6 +1,6 @@
 import { IsCPF } from '@src/utils/decorators/cpf.decorator';
 import { Match } from '@src/utils/decorators/match.decorator';
-import { IsDate, IsEmail, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsCPF()
@@ -14,11 +14,6 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  phone: string;
 
   @IsString()
   @IsNotEmpty()

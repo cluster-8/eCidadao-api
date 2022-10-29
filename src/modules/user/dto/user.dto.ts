@@ -15,9 +15,6 @@ export class UserDto {
   name: string;
 
   @Expose()
-  phone: string;
-
-  @Expose()
   role: enumUserRoles;
 
   @Expose()
