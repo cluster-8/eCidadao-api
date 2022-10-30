@@ -27,7 +27,7 @@ export class UserService {
   }
 
   private async checkUserAlreadyExists(email: string, cpf: string) {
-    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: { email: email, cpf: cpf } } });
+    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: [{ email: email }, { cpf: cpf }] } });
 
     if (userAlreadyExist) throw new BadRequestException('Cpf or email already exists');
   }
