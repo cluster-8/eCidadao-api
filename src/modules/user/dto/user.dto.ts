@@ -1,5 +1,7 @@
 import { enumUserRoles } from '@prisma/client';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ValidateNested } from 'class-validator';
+import { UsageTermsAccepted } from './create-user.dto';
 
 export class UserDto {
   @Expose()
@@ -21,8 +23,7 @@ export class UserDto {
   role: enumUserRoles;
 
   @Expose()
-  usageTermsAcceptedAt: Date;
-
-  @Expose()
-  usageTermVersion: number;
+  @Type(() => UsageTermsAccepted)
+  @ValidateNested({ each: true })
+  usageTermsAccepted: UsageTermsAccepted;
 }

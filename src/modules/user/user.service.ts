@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, UsageTermsAccepted } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from '../auth/auth.service';
@@ -15,7 +15,7 @@ export class UserService {
   async create(createDto: CreateUserDto) {
     await this.checkUserAlreadyExists(createDto.email, createDto.cpf);
 
-    await this.checkUsageTerms(createDto.usageTermsVersion);
+    await this.checkUsageTerms(createDto.usageTermsAccepted);
 
     delete createDto.passwordConfirmation;
 
@@ -32,16 +32,26 @@ export class UserService {
     if (userAlreadyExist) throw new BadRequestException('Cpf or email already exists');
   }
 
-  private async checkUsageTerms(version: number) {
-    const usageTerms = await this.prisma.usageTerms.findUnique({ where: { version } });
+  private async checkUsageTerms(usageTermsAccepted: UsageTermsAccepted) {
+    const usageTerms = await this.prisma.usageTerms.findUnique({ where: { id: usageTermsAccepted.usageTermsId } });
 
     if (!usageTerms) throw new BadRequestException('UsageTerms not found');
+
+    const usageTermsItensIds = usageTerms.itens.map((v) => v.id);
+
+    if (usageTermsItensIds.length !== usageTermsAccepted.usageTermsAcceptedItens.length) throw new BadRequestException('You need to accept all the usageTerms');
+
+    usageTermsAccepted.usageTermsAcceptedItens.forEach((v) => {
+      if (!usageTermsItensIds.includes(v)) throw new BadRequestException(`usageTermsAcceptedItens '${v}' not found`);
+    });
   }
 
   async findOne(id: string) {
     const { select } = await this.qb.query('user', 'id', { id });
 
     const user = await this.prisma.user.findUnique({ where: { id }, select });
+
+    if (!user) throw new BadRequestException('User not found');
 
     return defaultPlainToClass(UserDto, user);
   }

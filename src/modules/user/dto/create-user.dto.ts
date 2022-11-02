@@ -1,6 +1,26 @@
 import { IsCPF } from '@src/utils/decorators/cpf.decorator';
 import { Match } from '@src/utils/decorators/match.decorator';
-import { IsDate, IsEmail, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Expose, Type } from 'class-transformer';
+import { ArrayMinSize, IsArray, IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
+
+export class UsageTermsAccepted {
+  @IsDate()
+  @IsNotEmpty()
+  @Expose()
+  usageTermsAcceptedAt: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  @Expose()
+  usageTermsId: string;
+
+  @IsArray()
+  @ArrayMinSize(1)
+  @IsString({ each: true })
+  @IsNotEmpty()
+  @Expose()
+  usageTermsAcceptedItens: string[];
+}
 
 export class CreateUserDto {
   @IsCPF()
@@ -29,11 +49,8 @@ export class CreateUserDto {
   @Match('password')
   passwordConfirmation: string;
 
-  @IsDate()
   @IsNotEmpty()
-  usageTermsAcceptedAt: Date;
-
-  @IsInt()
-  @IsNotEmpty()
-  usageTermsVersion: number;
+  @ValidateNested()
+  @Type(() => UsageTermsAccepted)
+  usageTermsAccepted: UsageTermsAccepted;
 }
