@@ -21,14 +21,19 @@ model User {
   passwordResetExpires DateTime?
   role                 enumUserRoles @default(client)
 
-  usageTermsAcceptedAt DateTime
-  usageTermsVersion    Int
+  usageTermsAccepted UserUsageTermsAccepted[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   requestCreatedBy  Request[] @relation(name: "createdBy")
   requestFinishedBy Request[] @relation(name: "finishedBy")
+}
+
+type UserUsageTermsAccepted {
+  usageTermsId            String
+  usageTermsAcceptedAt    DateTime
+  usageTermsAcceptedItens String[]
 }
 
 model Request {
@@ -62,6 +67,7 @@ model usageTerms {
 }
 
 type UsageTermsItens {
+  id         String   @default(uuid())
   title      String
   paragraphs String[]
 }
