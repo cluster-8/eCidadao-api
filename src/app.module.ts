@@ -21,6 +21,7 @@ import { UtilsModule } from './utils/utils.module';
 export class AppModule {
   ensureAuthenticatedExclude = [
     { path: '/v1/auth/sign-in', method: RequestMethod.POST },
+    { path: '/v1/usage-terms', method: RequestMethod.GET },
     { path: '/v1/user', method: RequestMethod.POST },
   ];
 
