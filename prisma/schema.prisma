@@ -14,14 +14,15 @@ model User {
   id                   String        @id @default(auto()) @map("_id") @db.ObjectId
   cpf                  String        @unique
   email                String        @unique
-  hashCpf              String
-  hashEmail            String
-  secretId             String
   name                 String
   password             String
   passwordResetToken   String?
   passwordResetExpires DateTime?
   role                 enumUserRoles @default(client)
+
+  hashCpf   String? @unique
+  hashEmail String? @unique
+  secretId  String? @unique
 
   usageTermsAccepted UserUsageTermsAccepted[]
 
