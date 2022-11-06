@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { UserKeys } from '@sqlite/prisma/client';
 import { decrypt } from '@src/utils/functions/encrypter.fn';
-import { SqlitePrismaService } from '../sqlite/sqlite.prisma.service';
+import { sqlitePrisma } from '../sqlite/sqlite.prisma.fn';
 
 @Injectable()
 export class PrismaMiddlewareService {
-  constructor(private readonly sqlite: SqlitePrismaService) {}
-
   async UserDecrypt(params: Prisma.MiddlewareParams, next: (params: Prisma.MiddlewareParams) => Promise<any>) {
     try {
       if (params.model === 'User') {
@@ -16,14 +15,15 @@ export class PrismaMiddlewareService {
       const result = await next(params);
 
       if (params.model === 'User') {
-        const userKey = await this.sqlite.userKeys.findUnique({ where: { id: result.secretId } });
+        try {
+          let userKey: UserKeys;
 
-        console.log('userKey', userKey);
+          if (result?.secretId) userKey = await sqlitePrisma.userKeys.findUnique({ where: { id: result?.secretId } });
 
-        if (result['cpf']) result['cpf'] = decrypt(result?.cpf, 'userKey.secret');
-        if (result['email']) result['email'] = decrypt(result?.email, 'userKey.secret');
-
-        console.log('result: ', result);
+          if (result?.cpf) result['cpf'] = decrypt(result?.cpf, userKey?.secret);
+          if (result?.name) result['name'] = decrypt(result?.name, userKey?.secret);
+          if (result?.email) result['email'] = decrypt(result?.email, userKey?.secret);
+        } catch {}
       }
 
       return result;
