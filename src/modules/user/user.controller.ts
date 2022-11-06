@@ -25,13 +25,13 @@ export class UserController {
   }
 
   @Put(':id')
-  @Roles(enumRoles.isSameUser)
+  @Roles(enumRoles.isSameUser, enumRoles.admin)
   update(@Param() param: paramId, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(param.id, updateUserDto);
   }
 
   @Delete(':id')
-  @Roles(enumRoles.isSameUser)
+  @Roles(enumRoles.isSameUser, enumRoles.admin)
   remove(@Param() param: paramId) {
     return this.userService.remove(param.id);
   }
