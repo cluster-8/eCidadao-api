@@ -108,12 +108,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-14T10:44:31.496Z",
-    "modified": "2022-10-29T13:53:52.100Z",
+    "modified": "2022-11-06T18:04:48.670Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email1\": \"technical@technical.com\",\n  \"password1\": \"technical\",\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin1\"\n}",
+      "raw": "{\n  \"email\": \"teste5@teste.com\",\n  \"password\": \"teste5\"\n}",
       "form": []
     },
     "tests": [
@@ -148,12 +148,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-21T13:14:44.213Z",
-    "modified": "2022-10-29T14:00:33.998Z",
+    "modified": "2022-11-06T18:04:33.183Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"admin2\",\n  \"email\": \"admin2@admin.com\",\n  \"cpf\": \"06343722971\",\n  \"password\": \"admin1\",\n  \"passwordConfirmation\": \"admin1\",\n  \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n  \"usageTermsVersion\": 1\n}",
+      "raw": "{\n  \"name\": \"teste5\",\n  \"email\": \"teste5@teste.com\",\n  \"cpf\": \"99999999975\",\n  \"password\": \"teste5\",\n  \"passwordConfirmation\": \"teste5\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6365af73d64dbfd0f7c025da\",\n    \"usageTermsAcceptedItens\": [\"da2117e3-1d52-4a23-8465-61fcf1e15a9c\"]\n  }\n}",
       "form": []
     },
     "tests": [
@@ -170,11 +170,11 @@
     "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
     "containerId": "",
     "name": "find",
-    "url": "{{baseurl}}/v1/user/635d3201191a34a8df2ee2b4?select=all",
+    "url": "{{baseurl}}/v1/user/6367f82fcac2f6a1038283ad?select=all",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-21T13:38:22.139Z",
-    "modified": "2022-10-29T14:00:40.156Z",
+    "modified": "2022-11-06T18:08:52.294Z",
     "headers": [],
     "params": [
       {
@@ -275,5 +275,35 @@
       "bearer": "{{token}}"
     },
     "tests": []
+  },
+  {
+    "_id": "553274d4-a183-41ce-b85d-7eb3ba25ebd1",
+    "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
+    "containerId": "",
+    "name": "del",
+    "url": "{{baseurl}}/v1/user/6367f82fcac2f6a1038283ad",
+    "method": "DELETE",
+    "sortNum": 30000,
+    "created": "2022-11-06T18:08:13.885Z",
+    "modified": "2022-11-06T18:09:34.660Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"tete\",\n  \"email\": \"teste@teste.com\",\n  \"cpf\": \"06343722971\",\n  \"password\": \"teste\",\n  \"passwordConfirmation\": \"teste\",\n  \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\"\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": [
+      {
+        "type": "set-env-var",
+        "custom": "json.token",
+        "action": "setto",
+        "value": "{{token}}"
+      }
+    ]
   }
 ]
