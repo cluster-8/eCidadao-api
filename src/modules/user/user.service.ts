@@ -1,5 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
+import { CreateUserDto, UsageTermsAccepted } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import * as bcrypt from 'bcrypt';
+import { AuthService } from '../auth/auth.service';
 import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
 import { SqlitePrismaService } from '@src/providers/prisma/sqlite/sqlite.prisma.service';
 import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
@@ -23,7 +27,7 @@ export class UserService {
   async create(createDto: CreateUserDto) {
     await this.checkUserAlreadyExists(createDto.email, createDto.cpf);
 
-    await this.checkUsageTerms(createDto.usageTermsVersion);
+    await this.checkUsageTerms(createDto.usageTermsAccepted);
 
     delete createDto.passwordConfirmation;
 
@@ -55,15 +59,23 @@ export class UserService {
   }
 
   private async checkUserAlreadyExists(email: string, cpf: string) {
-    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: { email: email, cpf: cpf } } });
+    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: [{ email: email }, { cpf: cpf }] } });
 
     if (userAlreadyExist) throw new BadRequestException('Cpf or email already exists');
   }
 
-  private async checkUsageTerms(version: number) {
-    const usageTerms = await this.prisma.usageTerms.findUnique({ where: { version } });
+  private async checkUsageTerms(usageTermsAccepted: UsageTermsAccepted) {
+    const usageTerms = await this.prisma.usageTerms.findUnique({ where: { id: usageTermsAccepted.usageTermsId } });
 
     if (!usageTerms) throw new BadRequestException('UsageTerms not found');
+
+    const usageTermsItensIds = usageTerms.itens.map((v) => v.id);
+
+    if (usageTermsItensIds.length !== usageTermsAccepted.usageTermsAcceptedItens.length) throw new BadRequestException('You need to accept all the usageTerms');
+
+    usageTermsAccepted.usageTermsAcceptedItens.forEach((v) => {
+      if (!usageTermsItensIds.includes(v)) throw new BadRequestException(`usageTermsAcceptedItens '${v}' not found`);
+    });
   }
 
   async findOne(id: string) {
@@ -77,10 +89,30 @@ export class UserService {
   }
 
   async update(id: string, updateDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!user) throw new BadRequestException('User not found');
+
+    if (updateDto?.oldPassword && bcrypt.hashSync(updateDto.oldPassword, 10) !== user.password) {
+      throw new BadRequestException('Old password does not match');
+    }
+
+    if (updateDto?.newPassword) {
+      updateDto.password = bcrypt.hashSync(updateDto.newPassword, 10);
+
+      delete updateDto.oldPassword;
+      delete updateDto.newPassword;
+      delete updateDto.newPasswordConfirmation;
+    }
+
+    await this.prisma.user.update({ where: { id }, data: updateDto });
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} user`;
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!user) throw new BadRequestException('User not found');
+
+    await this.prisma.user.delete({ where: { id } });
   }
 }

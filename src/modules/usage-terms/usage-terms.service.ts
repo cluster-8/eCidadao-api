@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
+import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
 import { Request } from '@src/utils/services/request.service';
 import { CreateUsageTermDto } from './dto/create-usage-term.dto';
+import { UsageTermsDto } from './dto/usage-terms.dto';
 
 @Injectable()
 export class UsageTermsService {
@@ -19,6 +21,8 @@ export class UsageTermsService {
   }
 
   async find() {
-    return this.prisma.usageTerms.findFirst({ orderBy: { version: 'desc' } });
+    const result = await this.prisma.usageTerms.findFirst({ orderBy: { version: 'desc' } });
+
+    return defaultPlainToClass(UsageTermsDto, result);
   }
 }

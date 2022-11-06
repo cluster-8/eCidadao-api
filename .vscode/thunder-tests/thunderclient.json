@@ -244,12 +244,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-10-03T11:07:29.969Z",
-    "modified": "2022-10-03T11:14:32.948Z",
+    "modified": "2022-11-02T16:02:21.226Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"itens\": [\n    {\n      \"title\": \"teste\",\n      \"paragraphs\": [\"teste\"]\n    }\n  ]\n}",
+      "raw": "{\n  \"itens\": [\n    {\n      \"title\": \"teste\",\n      \"paragraphs\": [\n        \"teste\"\n      ]\n    },\n    {\n      \"title\": \"teste2\",\n      \"paragraphs\": [\n        \"teste2\"\n      ]\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
