@@ -3,11 +3,10 @@ import { Querybuilder } from 'nestjs-prisma-querybuilder';
 import { PrismaMiddlewareService } from './middleware/prisma.middleware.service';
 import { PrismaService } from './prisma.service';
 import { QuerybuilderService } from './querybuilder/querybuilder.service';
-import { SqlitePrismaModule } from './sqlite/sqlite.prisma.module';
 
 @Global()
 @Module({
-  imports: [SqlitePrismaModule],
+  imports: [],
   providers: [PrismaService, QuerybuilderService, Querybuilder, PrismaMiddlewareService],
   exports: [PrismaService, QuerybuilderService],
 })

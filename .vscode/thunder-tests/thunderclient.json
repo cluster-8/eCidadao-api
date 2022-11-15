@@ -113,7 +113,7 @@
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email1\": \"technical@technical.com\",\n  \"password1\": \"technical\",\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin1\"\n}",
+      "raw": "{\n  \"email\": \"teste5@teste.com\",\n  \"password\": \"teste5\"\n}",
       "form": []
     },
     "tests": [
