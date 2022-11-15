@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-12T12:52:03.257Z",
-    "modified": "2022-10-03T11:34:37.242Z",
+    "modified": "2022-11-15T00:51:36.324Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"image\": \"https://google.com.br\",\n  \"description\": \"https://google.com.br\",\n  \"type\": \"arvoreCaindo\",\n  \"address\": {\n    \"lat\": \"-23.0700184\",\n    \"long\": \"-45.71454070000001\"\n  }\n}",
+      "raw": "{\n  \"image\": \"https://google.com.br\",\n  \"description\": \"https://google.com.br\",\n  \"type\": \"alambrado_manutencao\",\n  \"address\": {\n    \"lat\": \"-23.0700184\",\n    \"long\": \"-45.71454070000001\"\n  }\n}",
       "form": []
     },
     "auth": {
@@ -268,6 +268,24 @@
     "sortNum": 20000,
     "created": "2022-10-03T11:07:33.772Z",
     "modified": "2022-10-03T11:07:50.294Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "d848031c-5ae2-4a1e-b429-941bb42e9103",
+    "colId": "3f05fe0c-4c75-4f83-b45e-4a46593d98a3",
+    "containerId": "",
+    "name": "find count to dashboard",
+    "url": "{{baseurl}}/v1/requests/count-to-dashboard",
+    "method": "GET",
+    "sortNum": 22500,
+    "created": "2022-11-15T00:49:40.454Z",
+    "modified": "2022-11-15T00:50:20.280Z",
     "headers": [],
     "params": [],
     "auth": {
