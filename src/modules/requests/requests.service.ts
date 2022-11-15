@@ -54,6 +54,21 @@ export class RequestsService {
     return defaultPlainToClass(RequestDto, this.prisma.request.findMany(query));
   }
 
+  async findCountToDashboard() {
+    const query = await this.qb.query('request', 'id');
+
+    const result = await this.prisma.request.findMany({ where: query.where });
+
+    const count = {};
+
+    result.forEach((v) => {
+      if (count.hasOwnProperty(v.type)) count[v.type]++;
+      else count[v.type] = 1;
+    });
+
+    return count;
+  }
+
   async findAddressFromGoogleGeocode(lat: string, long: string) {
     return this.buildAddress(lat, long);
   }

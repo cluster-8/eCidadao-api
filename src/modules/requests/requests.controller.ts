@@ -30,6 +30,12 @@ export class RequestsController {
     return this.requestsService.findTechical();
   }
 
+  @Get('count-to-dashboard')
+  @NoCache()
+  async findCountToDashboard() {
+    return this.requestsService.findCountToDashboard();
+  }
+
   @Get()
   @NoCache()
   async find() {
