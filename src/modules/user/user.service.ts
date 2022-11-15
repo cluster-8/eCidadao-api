@@ -1,11 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
+import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
+import { sqlitePrisma } from '@src/providers/prisma/sqlite/sqlite.prisma.fn';
+import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
+import { encrypt } from '@src/utils/functions/encrypter.fn';
+import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
+import { AuthService } from '../auth/auth.service';
 import { CreateUserDto, UsageTermsAccepted } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import * as bcrypt from 'bcrypt';
-import { AuthService } from '../auth/auth.service';
-import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
-import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
 import { UserDto } from './dto/user.dto';
 
 @Injectable()
@@ -19,15 +22,39 @@ export class UserService {
 
     delete createDto.passwordConfirmation;
 
-    const user = await this.prisma.user.create({ data: { ...createDto, password: bcrypt.hashSync(createDto.password, 10) } });
+    createDto = await this.encryptUser(createDto);
+
+    const user = await this.prisma.user.create({ data: { ...createDto } });
 
     const token = this.authService.generateToken(user.id, user.email, user.role);
 
     return { user, token };
   }
 
+  async encryptUser(createDto: CreateUserDto) {
+    const key = crypto.randomBytes(16).toString('hex');
+
+    const secret = await sqlitePrisma.userKeys.create({ data: { secret: key } });
+
+    createDto.secretId = secret.id;
+
+    createDto.hashCpf = crypto.createHash('md5').update(createDto.cpf).digest('hex');
+    createDto.hashEmail = crypto.createHash('md5').update(createDto.email).digest('hex');
+
+    createDto.password = bcrypt.hashSync(createDto.password, 10);
+
+    createDto.cpf = encrypt(createDto.cpf, key);
+    createDto.name = encrypt(createDto.name, key);
+    createDto.email = encrypt(createDto.email, key);
+
+    return createDto;
+  }
+
   private async checkUserAlreadyExists(email: string, cpf: string) {
-    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: [{ email: email }, { cpf: cpf }] } });
+    const hashCpf = crypto.createHash('md5').update(cpf).digest('hex');
+    const hashEmail = crypto.createHash('md5').update(email).digest('hex');
+
+    const userAlreadyExist = await this.prisma.user.findFirst({ where: { OR: [{ hashCpf }, { hashEmail }] } });
 
     if (userAlreadyExist) throw new BadRequestException('Cpf or email already exists');
   }
@@ -81,6 +108,12 @@ export class UserService {
 
     if (!user) throw new BadRequestException('User not found');
 
-    await this.prisma.user.delete({ where: { id } });
+    await sqlitePrisma.userKeys.delete({ where: { id: user?.secretId } }).catch(() => {
+      return;
+    });
+
+    await this.prisma.user.delete({ where: { id } }).catch(() => {
+      return;
+    });
   }
 }

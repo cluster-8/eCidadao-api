@@ -8,8 +8,9 @@
   "scripts": {
     "start:local": "NODE_ENV=local nest start --debug --watch",
     "start:prod": "node dist/main",
-    "prisma": "npx prisma db push; npx prisma generate",
-    "heroku-prebuild": "rm -rf dist && npm run prisma",
+    "prisma": "npx prisma db push && npx prisma generate",
+    "prisma:sqlite": "npx prisma db push --schema ./prisma/sqlite/schema.prisma && npx prisma generate --schema prisma/sqlite/schema.prisma",
+    "heroku-prebuild": "rm -rf dist && npm run prisma && npm run prisma:sqlite",
     "build": "nest build",
     "format": "prettier --write --loglevel=error \"src/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -71,6 +72,7 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npm run gitignore",
       "pre-push": "npm run format && npm run lint"
     }
   },

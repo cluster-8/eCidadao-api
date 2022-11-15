@@ -15,11 +15,14 @@ model User {
   cpf                  String        @unique
   email                String        @unique
   name                 String
-  phone                String?
   password             String
   passwordResetToken   String?
   passwordResetExpires DateTime?
   role                 enumUserRoles @default(client)
+
+  hashCpf   String? @unique
+  hashEmail String? @unique
+  secretId  String? @unique
 
   usageTermsAccepted UserUsageTermsAccepted[]
 
