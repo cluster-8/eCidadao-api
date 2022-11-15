@@ -25,7 +25,7 @@ export class RequestsController {
 
   @Get('technical')
   @NoCache()
-  @Roles(enumRoles.technical)
+  @Roles(enumRoles.technical, enumRoles.admin)
   async findTechical() {
     return this.requestsService.findTechical();
   }
@@ -43,7 +43,7 @@ export class RequestsController {
   }
 
   @Put('technical/:id')
-  @Roles(enumRoles.technical)
+  @Roles(enumRoles.technical, enumRoles.admin)
   async finishRequest(@Param() param: paramId, @Body() finishDto: FinishRequestDto) {
     return this.requestsService.finishRequest(param.id, finishDto);
   }

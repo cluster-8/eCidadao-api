@@ -153,7 +153,7 @@
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"admin2\",\n  \"email\": \"admin2@admin.com\",\n  \"cpf\": \"06343722971\",\n  \"password\": \"admin1\",\n  \"passwordConfirmation\": \"admin1\",\n  \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n  \"usageTermsVersion\": 1\n}",
+      "raw": "{\n  \"name\": \"client\",\n  \"email\": \"client13@client.com\",\n  \"cpf\": \"06343722973\",\n  \"password\": \"client\",\n  \"passwordConfirmation\": \"client\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6362948d54198c179579a49f\",\n    \"usageTermsAcceptedItens\": [\n      \"2f097d21-44e2-449d-8e92-05d57046f667\",\n      \"751d0916-d5fc-471a-854a-3efee419cec8\"\n    ]\n  }\n}",
       "form": []
     },
     "tests": [
@@ -177,6 +177,12 @@
     "modified": "2022-10-29T14:00:40.156Z",
     "headers": [],
     "params": [
+      {
+        "name": "select",
+        "value": "name email",
+        "isDisabled": true,
+        "isPath": false
+      },
       {
         "name": "select",
         "value": "all",
@@ -244,12 +250,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-10-03T11:07:29.969Z",
-    "modified": "2022-10-03T11:14:32.948Z",
+    "modified": "2022-11-02T16:02:21.226Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"itens\": [\n    {\n      \"title\": \"teste\",\n      \"paragraphs\": [\"teste\"]\n    }\n  ]\n}",
+      "raw": "{\n  \"itens\": [\n    {\n      \"title\": \"teste\",\n      \"paragraphs\": [\n        \"teste\"\n      ]\n    },\n    {\n      \"title\": \"teste2\",\n      \"paragraphs\": [\n        \"teste2\"\n      ]\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
