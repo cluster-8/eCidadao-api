@@ -10,7 +10,6 @@
     "start:prod": "node dist/main",
     "prisma": "npx prisma db push && npx prisma generate",
     "prisma:sqlite": "npx prisma db push --schema ./prisma/sqlite/schema.prisma && npx prisma generate --schema prisma/sqlite/schema.prisma",
-    "heroku-prebuild": "rm -rf dist",
     "heroku-postbuild": "npm run prisma:sqlite && npm run prisma",
     "build": "nest build",
     "format": "prettier --write --loglevel=error \"src/**/*.ts\"",
