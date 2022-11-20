@@ -1,20 +1,22 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UserKeys } from '@sqlite/prisma/client';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
 import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
 import { sqlitePrisma } from '@src/providers/prisma/sqlite/sqlite.prisma.fn';
 import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
 import { encrypt } from '@src/utils/functions/encrypter.fn';
+import { Request } from '@src/utils/services/request.service';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { AuthService } from '../auth/auth.service';
 import { CreateUserDto, UsageTermsAccepted } from './dto/create-user.dto';
+import { UpdateUserUsageTermsDto } from './dto/update-user-usage-terms.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService, private readonly authService: AuthService, private readonly qb: QuerybuilderService) {}
+  constructor(private readonly prisma: PrismaService, private readonly authService: AuthService, private readonly qb: QuerybuilderService, private readonly request: Request) {}
 
   async create(createDto: CreateUserDto) {
     await this.checkUserAlreadyExists(createDto.email, createDto.cpf);
@@ -111,6 +113,20 @@ export class UserService {
     }
 
     await this.prisma.user.update({ where: { id }, data: updateDto });
+  }
+
+  async updateUsageTerms(updateDto: UpdateUserUsageTermsDto) {
+    const user = await this.prisma.user.findUnique({ where: { id: this.request.user.id } });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    if (user.usageTermsAccepted.find((terms) => terms.usageTermsId === updateDto.usageTermsAccepted.usageTermsId)) {
+      throw new BadRequestException('User already accepted this terms version');
+    }
+
+    await this.checkUsageTerms(updateDto.usageTermsAccepted);
+
+    await this.prisma.user.update({ where: { id: user.id }, data: { usageTermsAccepted: { push: updateDto.usageTermsAccepted } } });
   }
 
   async encryptUserOnUpdate(updateDto: UpdateUserDto, userKey: UserKeys) {

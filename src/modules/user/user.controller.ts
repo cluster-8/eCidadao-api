@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { paramId } from '@src/utils/dtos/param.id.dto';
 import { Roles, enumRoles } from '@src/utils/decorators/roles.decorator';
 import { NoCache } from '@src/utils/decorators/no.cache.decorator';
+import { UpdateUserUsageTermsDto } from './dto/update-user-usage-terms.dto';
 
 @Controller({ path: 'user', version: '1' })
 export class UserController {
@@ -24,10 +25,15 @@ export class UserController {
     return this.userService.findOne(param.id);
   }
 
+  @Put('usage-terms')
+  updateUsageTerms(@Body() updateDto: UpdateUserUsageTermsDto) {
+    return this.userService.updateUsageTerms(updateDto);
+  }
+
   @Put(':id')
   @Roles(enumRoles.isSameUser, enumRoles.admin)
-  update(@Param() param: paramId, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(param.id, updateUserDto);
+  update(@Param() param: paramId, @Body() updateDto: UpdateUserDto) {
+    return this.userService.update(param.id, updateDto);
   }
 
   @Delete(':id')
