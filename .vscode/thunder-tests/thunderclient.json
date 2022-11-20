@@ -148,12 +148,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-21T13:14:44.213Z",
-    "modified": "2022-11-15T01:10:48.701Z",
+    "modified": "2022-11-20T16:21:10.053Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"technical\",\n  \"email\": \"technical@admin.com\",\n  \"cpf\": \"00000000001\",\n  \"password\": \"technical\",\n  \"passwordConfirmation\": \"technical\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6365af73d64dbfd0f7c025da\",\n    \"usageTermsAcceptedItens\": [\n      \"da2117e3-1d52-4a23-8465-61fcf1e15a9c\",\n      \"865ce443-9558-4d5d-9385-9760f0972169\",\n      \"b614b9a1-9cc1-4bc9-a539-9173f70160d7\",\n      \"e4153989-82e1-4e44-aee3-d9d350a42444\",\n      \"6bdbdb77-256c-4dd2-9946-de6796edb31a\",\n      \"2f06c19c-c253-4788-aad6-8f1577adbf0d\",\n      \"92d357f0-fad9-4955-8399-b8e31e206d66\",\n      \"971f0a94-7f3b-4edf-8c03-1353f5bcc70f\",\n      \"0a4307f4-29ce-4f79-b696-0d4dce6028a5\",\n      \"74ef156a-64c6-43fd-832b-d406484c73a9\",\n      \"980000bb-985e-457d-9bba-04db4416a329\",\n      \"6cc140a4-30fa-4fa5-a2e4-72151a5fa0dd\"\n    ]\n  }\n}",
+      "raw": "{\n  \"name\": \"admin\",\n  \"email\": \"admin@admin.com\",\n  \"cpf\": \"00000000000\",\n  \"password\": \"admin1\",\n  \"passwordConfirmation\": \"admin1\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6365af73d64dbfd0f7c025da\",\n    \"usageTermsAcceptedItens\": [\n      \"da2117e3-1d52-4a23-8465-61fcf1e15a9c\",\n      \"865ce443-9558-4d5d-9385-9760f0972169\",\n      \"b614b9a1-9cc1-4bc9-a539-9173f70160d7\",\n      \"e4153989-82e1-4e44-aee3-d9d350a42444\",\n      \"6bdbdb77-256c-4dd2-9946-de6796edb31a\",\n      \"2f06c19c-c253-4788-aad6-8f1577adbf0d\",\n      \"92d357f0-fad9-4955-8399-b8e31e206d66\",\n      \"971f0a94-7f3b-4edf-8c03-1353f5bcc70f\",\n      \"0a4307f4-29ce-4f79-b696-0d4dce6028a5\",\n      \"74ef156a-64c6-43fd-832b-d406484c73a9\",\n      \"980000bb-985e-457d-9bba-04db4416a329\",\n      \"6cc140a4-30fa-4fa5-a2e4-72151a5fa0dd\"\n    ]\n  }\n}",
       "form": []
     },
     "tests": [
@@ -170,11 +170,11 @@
     "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
     "containerId": "",
     "name": "find",
-    "url": "{{baseurl}}/v1/user/6372e7183d83b7b6912b5eae?select=all",
+    "url": "{{baseurl}}/v1/user/637a53e97d084b1a05b0788a?select=all",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-21T13:38:22.139Z",
-    "modified": "2022-11-15T01:11:02.582Z",
+    "modified": "2022-11-20T16:21:03.267Z",
     "headers": [],
     "params": [
       {
@@ -288,6 +288,29 @@
     "modified": "2022-11-15T00:50:20.280Z",
     "headers": [],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "74bc7d73-4c84-40c2-a853-2158658ebd80",
+    "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
+    "containerId": "",
+    "name": "update usage terms",
+    "url": "{{baseurl}}/v1/user/usage-terms",
+    "method": "PUT",
+    "sortNum": 30000,
+    "created": "2022-11-20T16:07:20.658Z",
+    "modified": "2022-11-20T16:16:07.288Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6374417762e636c969768047\",\n    \"usageTermsAcceptedItens\": [\n      \"9ed29203-c2a6-488e-922d-e988df43950d\",\n      \"1e7771ec-d6a1-4a73-a032-6cce190f4293\",\n      \"9882d499-c50c-40a2-8942-af67b01fb071\",\n      \"51db9041-ab9a-40c8-b528-7cc4a08fe28f\",\n      \"90fd50a8-5190-4801-aa6a-eaa6a52ad0b4\",\n      \"e36252c2-1a73-49d5-b983-67f2df95530e\",\n      \"917a961e-29f3-42d1-b2db-36aa6775dff6\",\n      \"c20d43a2-487a-469a-ab14-50e290b93ca1\",\n      \"159214cd-190a-4efe-be03-127a3044f2ff\",\n      \"dff5fbae-7da3-4016-95d5-722cb82bb61a\",\n      \"c8f49caa-cabd-43a3-97b4-006507741176\",\n      \"ad34a18f-6d20-4fd0-9f55-8db5935cf4cc\"\n    ]\n  }\n}",
+      "form": []
+    },
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"
