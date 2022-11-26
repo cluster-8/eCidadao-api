@@ -3,13 +3,12 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../../node_modules/@sqlite/prisma/client"
+  output   = "../../node_modules/@keys/prisma/client"
 }
 
 datasource db {
-  provider          = "sqlite"
-  url               = "file:./sqlite.db"
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL_KEYS")
 }
 
 model UserKeys {

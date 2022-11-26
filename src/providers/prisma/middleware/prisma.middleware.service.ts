@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { UserKeys } from '@sqlite/prisma/client';
 import { decrypt } from '@src/utils/functions/encrypter.fn';
-import { sqlitePrisma } from '../sqlite/sqlite.prisma.fn';
+import { keysPrisma } from '../keys/keys.prisma.fn';
 
 @Injectable()
 export class PrismaMiddlewareService {
@@ -18,7 +18,7 @@ export class PrismaMiddlewareService {
         try {
           let userKey: UserKeys;
 
-          if (result?.secretId) userKey = await sqlitePrisma.userKeys.findUnique({ where: { id: result?.secretId } });
+          if (result?.secretId) userKey = await keysPrisma.userKeys.findUnique({ where: { id: result?.secretId } });
 
           if (result?.cpf) result['cpf'] = decrypt(result?.cpf, userKey?.secret);
           if (result?.name) result['name'] = decrypt(result?.name, userKey?.secret);

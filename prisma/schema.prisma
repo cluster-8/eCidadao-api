@@ -20,8 +20,8 @@ model User {
   passwordResetExpires DateTime?
   role                 enumUserRoles @default(client)
 
-  hashCpf   String? @unique
-  hashEmail String? @unique
+  hashCpf   String? //unique
+  hashEmail String? //unique
   secretId  String? @unique
 
   usageTermsAccepted UserUsageTermsAccepted[]

@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { UserKeys } from '@sqlite/prisma/client';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
 import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
-import { sqlitePrisma } from '@src/providers/prisma/sqlite/sqlite.prisma.fn';
+import { keysPrisma } from '@src/providers/prisma/keys/keys.prisma.fn';
 import defaultPlainToClass from '@src/utils/functions/default.plain.to.class.fn';
 import { encrypt } from '@src/utils/functions/encrypter.fn';
 import { Request } from '@src/utils/services/request.service';
@@ -37,7 +37,7 @@ export class UserService {
   async encryptUserOnCreate(createDto: CreateUserDto) {
     const key = crypto.randomBytes(16).toString('hex');
 
-    const secret = await sqlitePrisma.userKeys.create({ data: { secret: key } });
+    const secret = await keysPrisma.userKeys.create({ data: { secret: key } });
 
     createDto.secretId = secret.id;
 
@@ -92,7 +92,7 @@ export class UserService {
 
     if (!user) throw new BadRequestException('User not found');
 
-    const userKey = await sqlitePrisma.userKeys.findUnique({ where: { id: user.secretId } });
+    const userKey = await keysPrisma.userKeys.findUnique({ where: { id: user.secretId } });
 
     if (!userKey) throw new BadRequestException('User key not found');
 
@@ -148,7 +148,7 @@ export class UserService {
 
     if (!user) throw new BadRequestException('User not found');
 
-    await sqlitePrisma.userKeys.delete({ where: { id: user?.secretId } }).catch(() => {
+    await keysPrisma.userKeys.delete({ where: { id: user?.secretId } }).catch(() => {
       return;
     });
 
