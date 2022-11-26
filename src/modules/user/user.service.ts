@@ -96,7 +96,7 @@ export class UserService {
 
     if (!userKey) throw new BadRequestException('User key not found');
 
-    if (updateDto?.oldPassword && bcrypt.hashSync(updateDto.oldPassword, 10) !== user.password) {
+    if (updateDto?.oldPassword && bcrypt.compare(updateDto.oldPassword, user.password)) {
       throw new BadRequestException('Old password does not match');
     }
 

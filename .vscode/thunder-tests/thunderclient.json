@@ -108,12 +108,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-14T10:44:31.496Z",
-    "modified": "2022-11-26T13:39:38.144Z",
+    "modified": "2022-11-26T14:12:24.856Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"teste@teste.com.br\",\n  \"password\": \"123123\",\n  \"email2\": \"admin@admin.com\",\n  \"password1\": \"admin1\"\n}",
+      "raw": "{\n  \"email\": \"technical@technical.com\",\n  \"password\": \"technical\",\n  \"email2\": \"admin@admin.com\",\n  \"password2\": \"admin1\"\n}",
       "form": []
     },
     "tests": [
@@ -148,12 +148,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-09-21T13:14:44.213Z",
-    "modified": "2022-11-26T13:35:42.208Z",
+    "modified": "2022-11-26T14:11:12.100Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"admin\",\n  \"email\": \"teste2@teste2.com\",\n  \"cpf\": \"00000000003\",\n  \"password\": \"admin1\",\n  \"passwordConfirmation\": \"admin1\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6365af73d64dbfd0f7c025da\",\n    \"usageTermsAcceptedItens\": [\n      \"da2117e3-1d52-4a23-8465-61fcf1e15a9c\",\n      \"865ce443-9558-4d5d-9385-9760f0972169\",\n      \"b614b9a1-9cc1-4bc9-a539-9173f70160d7\",\n      \"e4153989-82e1-4e44-aee3-d9d350a42444\",\n      \"6bdbdb77-256c-4dd2-9946-de6796edb31a\",\n      \"2f06c19c-c253-4788-aad6-8f1577adbf0d\",\n      \"92d357f0-fad9-4955-8399-b8e31e206d66\",\n      \"971f0a94-7f3b-4edf-8c03-1353f5bcc70f\",\n      \"0a4307f4-29ce-4f79-b696-0d4dce6028a5\",\n      \"74ef156a-64c6-43fd-832b-d406484c73a9\",\n      \"980000bb-985e-457d-9bba-04db4416a329\",\n      \"6cc140a4-30fa-4fa5-a2e4-72151a5fa0dd\"\n    ]\n  }\n}",
+      "raw": "{\n  \"name\": \"technical\",\n  \"email\": \"technical@technical.com\",\n  \"cpf\": \"00000000003\",\n  \"password\": \"technical\",\n  \"passwordConfirmation\": \"technical\",\n  \"usageTermsAccepted\": {\n    \"usageTermsAcceptedAt\": \"2022-09-21T13:26:49.016Z\",\n    \"usageTermsId\": \"6365af73d64dbfd0f7c025da\",\n    \"usageTermsAcceptedItens\": [\n      \"da2117e3-1d52-4a23-8465-61fcf1e15a9c\",\n      \"865ce443-9558-4d5d-9385-9760f0972169\",\n      \"b614b9a1-9cc1-4bc9-a539-9173f70160d7\",\n      \"e4153989-82e1-4e44-aee3-d9d350a42444\",\n      \"6bdbdb77-256c-4dd2-9946-de6796edb31a\",\n      \"2f06c19c-c253-4788-aad6-8f1577adbf0d\",\n      \"92d357f0-fad9-4955-8399-b8e31e206d66\",\n      \"971f0a94-7f3b-4edf-8c03-1353f5bcc70f\",\n      \"0a4307f4-29ce-4f79-b696-0d4dce6028a5\",\n      \"74ef156a-64c6-43fd-832b-d406484c73a9\",\n      \"980000bb-985e-457d-9bba-04db4416a329\",\n      \"6cc140a4-30fa-4fa5-a2e4-72151a5fa0dd\"\n    ]\n  }\n}",
       "form": []
     },
     "tests": [
@@ -170,11 +170,11 @@
     "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
     "containerId": "",
     "name": "find",
-    "url": "{{baseurl}}/v1/user/6382162e0ca794eda29009cf?select=all",
+    "url": "{{baseurl}}/v1/user/63821dd69c821fc667fa4493?select=all",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-21T13:38:22.139Z",
-    "modified": "2022-11-26T13:37:48.932Z",
+    "modified": "2022-11-26T14:08:51.927Z",
     "headers": [],
     "params": [
       {
@@ -322,16 +322,16 @@
     "colId": "d0b3dcb6-a3d5-4f15-9a8c-9195cc355b4c",
     "containerId": "",
     "name": "update",
-    "url": "{{baseurl}}/v1/user/6382162e0ca794eda29009cf",
+    "url": "{{baseurl}}/v1/user/63821c35ed0af86a44e89619",
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-11-26T13:36:45.298Z",
-    "modified": "2022-11-26T13:38:10.779Z",
+    "modified": "2022-11-26T14:13:24.819Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"updated\",\n  \"email\": \"TESTE2@TESTE2.COM\"\n}",
+      "raw": "{\n  \"newPassword\": \"technical1\",\n  \"newPasswordConfirmation\": \"technical1\",\n  \"oldPassword\": \"technical1\"\n}",
       "form": []
     },
     "auth": {
