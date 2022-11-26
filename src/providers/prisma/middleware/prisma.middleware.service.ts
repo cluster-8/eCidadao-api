@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { UserKeys } from '@sqlite/prisma/client';
+import { UserKeys } from '@keys/prisma/client';
 import { decrypt } from '@src/utils/functions/encrypter.fn';
 import { keysPrisma } from '../keys/keys.prisma.fn';
 

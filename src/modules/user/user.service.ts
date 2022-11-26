@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { UserKeys } from '@sqlite/prisma/client';
+import { UserKeys } from '@keys/prisma/client';
 import { PrismaService } from '@src/providers/prisma/prisma.service';
 import { QuerybuilderService } from '@src/providers/prisma/querybuilder/querybuilder.service';
 import { keysPrisma } from '@src/providers/prisma/keys/keys.prisma.fn';
