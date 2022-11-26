@@ -326,12 +326,12 @@
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-11-26T13:36:45.298Z",
-    "modified": "2022-11-26T14:13:24.819Z",
+    "modified": "2022-11-26T14:18:42.329Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"newPassword\": \"technical1\",\n  \"newPasswordConfirmation\": \"technical1\",\n  \"oldPassword\": \"technical1\"\n}",
+      "raw": "{\n  \"newPassword\": \"technical1\",\n  \"newPasswordConfirmation\": \"technical1\",\n  \"oldPassword\": \"technical\"\n}",
       "form": []
     },
     "auth": {
