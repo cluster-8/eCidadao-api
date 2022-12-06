@@ -57,7 +57,7 @@ export class RequestsService {
   async findAll() {
     const query = await this.qb.query('request', 'id');
 
-    query.where = { ...query.where, status: { not: 'closed' } };
+    query.where = { ...query.where };
 
     return defaultPlainToClass(RequestDto, this.prisma.request.findMany(query));
   }
@@ -65,7 +65,7 @@ export class RequestsService {
   async findCountToDashboard() {
     const query = await this.qb.query('request', 'id');
 
-    const result = await this.prisma.request.findMany({ where: { ...query.where, status: { not: 'closed' } } });
+    const result = await this.prisma.request.findMany({ where: { ...query.where } });
 
     const count = {};
 
