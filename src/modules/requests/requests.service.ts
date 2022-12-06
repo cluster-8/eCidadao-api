@@ -54,6 +54,12 @@ export class RequestsService {
     return defaultPlainToClass(RequestDto, this.prisma.request.findMany(query));
   }
 
+  async findAll() {
+    const query = await this.qb.query('request', 'id');
+
+    return defaultPlainToClass(RequestDto, this.prisma.request.findMany(query));
+  }
+
   async findCountToDashboard() {
     const query = await this.qb.query('request', 'id');
 

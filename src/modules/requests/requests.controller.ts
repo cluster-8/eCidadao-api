@@ -36,6 +36,12 @@ export class RequestsController {
     return this.requestsService.findCountToDashboard();
   }
 
+  @Get('map')
+  @NoCache()
+  async findAll() {
+    return this.requestsService.findAll();
+  }
+
   @Get()
   @NoCache()
   async find() {
